@@ -8,5 +8,6 @@ import (
 
 func main() {
 	app := &app.App{}
+	app.Initialize()
 	app.Run(":" + os.Getenv("PORT"))
 }

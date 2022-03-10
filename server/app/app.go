@@ -1,16 +1,12 @@
 package app
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/osaro-imohe/ping-pong/server/app/handler"
-	"github.com/osaro-imohe/ping-pong/server/app/model"
 	"github.com/osaro-imohe/ping-pong/server/app/websocket"
-	"github.com/osaro-imohe/ping-pong/server/config"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -22,16 +18,7 @@ type App struct {
 }
 
 // Initialize initializes the app with predefined configuration
-func (a *App) Initialize(config *config.Config) {
-	db, err := gorm.Open(postgres.New(postgres.Config{
-		DSN: fmt.Sprintf("user=%s password=%s dbname=%s port=%d sslmode=disable", config.DB.Username, config.DB.Password, config.DB.Name, config.DB.Port),
-	}), &gorm.Config{})
-
-	if err != nil {
-		log.Fatal("Could not connect database")
-	}
-
-	a.DB = model.DBMigrate(db)
+func (a *App) Initialize() {
 	a.Router = mux.NewRouter()
 	a.Pool = websocket.NewPool()
 	go a.Pool.Start()
