@@ -1,7 +1,9 @@
 FROM golang:1.10
 
 WORKDIR /
+
 COPY . .
-RUN go install
+
+RUN go mod download
 
 CMD ["go","run","main.go"]
