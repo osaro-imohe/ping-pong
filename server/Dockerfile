@@ -4,8 +4,8 @@ WORKDIR /
 
 COPY . .
 
-COPY go.mod go.sum ./
+RUN go mod init
 
-RUN go mod download
+RUN go build  -o /server
 
 CMD ["go","run","main.go"]
