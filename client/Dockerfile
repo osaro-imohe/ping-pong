@@ -3,5 +3,5 @@ WORKDIR /src
 COPY package.json ./
 COPY yarn.lock ./
 COPY ./ ./
-RUN npm i
+RUN  yarn install
 CMD ["yarn", "start"]
