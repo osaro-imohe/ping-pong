@@ -2,7 +2,6 @@ package websocket
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 )
 
@@ -33,7 +32,6 @@ func (pool *Pool) Start() {
 	for {
 		select {
 		case s := <-pool.Register:
-			fmt.Println("Connecting to room")
 			connections := pool.Rooms[s.Room]
 			if connections == nil {
 				connections = make(map[*Connection]bool)
@@ -60,7 +58,6 @@ func (pool *Pool) Start() {
 				c.Send <- state
 			}
 		case m := <-pool.Broadcast:
-			fmt.Println("Sending message to all clients in Pool")
 			connections := pool.Rooms[m.Room]
 			for c := range connections {
 				select {

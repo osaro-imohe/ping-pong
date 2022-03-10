@@ -40,23 +40,21 @@ const Game = () => {
   const [isOpponentConnected, setIsOpponentConnected] = useState<boolean>(false);
 
   const updateGameState = (data: GameState) => {
-    const player = data.PlayerOne.ID === userId ? 'PlayerOne' : 'PlayerTwo';
-    const opponent = player === 'PlayerOne' ? 'PlayerTwo' : 'PlayerOne';
-    setWins(data[player].Score);
-    setLoses(data[opponent].Score);
-    setPaddleOffsetY(data[player].Y);
-    setOppPaddleOffsetY(data[opponent].Y);
-    setPaddleOffsetX(data[player].X);
-    setIsOpponentConnected(data[opponent].ID !== '');
-    setPaddleWidth(data[player].PaddleWidth);
-    setPaddleHeight(data[player].PaddleHeight);
-    setBoardHeight(data.Board.Height);
-    setBoardWidth(data.Board.Width);
     setBallX(data.Ball.X);
     setBallY(data.Ball.Y);
     setBallWidth(data.Ball.Width);
     setBallHeight(data.Ball.Height);
     setBallRadius(data.Ball.Radius);
+    setBoardWidth(data.Board.Width);
+    setBoardHeight(data.Board.Height);
+    setPaddleOffsetX(data.PlayerOne.X);
+    setPaddleOffsetY(data.PlayerOne.Y);
+    setOppPaddleOffsetY(data.PlayerTwo.Y);
+    setPaddleWidth(data.PlayerOne.PaddleWidth);
+    setPaddleHeight(data.PlayerOne.PaddleHeight);
+    setIsOpponentConnected(data.PlayerOne.ID !== '' && data.PlayerTwo.ID !== '');
+    setWins(data.PlayerOne.ID === userId ? data.PlayerOne.Score : data.PlayerTwo.Score);
+    setLoses(data.PlayerOne.ID !== userId ? data.PlayerOne.Score : data.PlayerTwo.Score);
   };
 
   const connect = useCallback(async () => {
@@ -64,7 +62,7 @@ const Game = () => {
       setLoading(true);
       // 5 second delay for dramatic flare XD
       await delay(5);
-      const conn = new WebSocket(`wss://ping-pong-app-server.herokuapp.com/new-game/${gameCode}`);
+      const conn = new WebSocket(`ws://localhost:8080/new-game/${gameCode}`);
       conn.onopen = () => {
         setC(conn);
         setLoading(false);
@@ -130,33 +128,33 @@ const Game = () => {
         )}
 
         {(!loading && !error) && (
-        <Container textAlign="center">
-          <Container textAlign="center" fullWidth marginBottom="20px">
-            <Text text={`Game code: ${gameCode}`} variant="secondary" />
-            {!isOpponentConnected
-              ? <Text text="Waiting for opponent ..." variant="secondary" />
-              : (
-                <>
-                  <ScoreBoard wins={wins} loses={loses} />
-                  <Text text="Press the space button to begin" variant="secondary" />
-                </>
-              )}
+          <Container textAlign="center">
+            <Container textAlign="center" fullWidth marginBottom="20px">
+              <Text text={`Game code: ${gameCode}`} variant="secondary" />
+              {!isOpponentConnected
+                ? <Text text="Waiting for opponent ..." variant="secondary" />
+                : (
+                  <>
+                    <ScoreBoard wins={wins} loses={loses} />
+                    <Text text="Press the space button to begin" variant="secondary" />
+                  </>
+                )}
+            </Container>
+            <Container width={`${boardWidth}px`} inline height={`${boardHeight}px`} justifyContent="space-between" position="relative" border="2px solid white">
+              <Ball x={ballX} y={ballY} width={ballWidth} height={ballHeight} radius={ballRadius} />
+              <Paddle type="left-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={paddleOffsetY} />
+              <Paddle type="right-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={oppPaddleOffsetY} />
+            </Container>
           </Container>
-          <Container width={`${boardWidth}px`} inline height={`${boardHeight}px`} justifyContent="space-between" position="relative" border="2px solid white">
-            <Paddle type="left-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={paddleOffsetY} />
-            <Paddle type="right-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={oppPaddleOffsetY} />
-          </Container>
-          <Ball x={ballX} y={ballY} width={ballWidth} height={ballHeight} radius={ballRadius} />
-        </Container>
         )}
 
         {(error) && (
-        <Container>
-          <Text text="We're having some difficulties connecting to the game server" variant="secondary" />
-          <Container fullWidth justifyContent="center" inline marginTop="20px">
-            <Button text="Try again" variant="auxilary" onClick={() => window.location.reload()} />
+          <Container>
+            <Text text="We're having some difficulties connecting to the game server" variant="secondary" />
+            <Container fullWidth justifyContent="center" inline marginTop="20px">
+              <Button text="Try again" variant="auxilary" onClick={() => window.location.reload()} />
+            </Container>
           </Container>
-        </Container>
         )}
       </Container>
     </Page>

@@ -5,7 +5,7 @@ const Ball = ({
   x, y, width, height, radius,
 } : BallProps) => (
   <Container
-    bottom={y}
+    top={y}
     left={x}
     width={`${width}px`}
     height={`${height}px`}

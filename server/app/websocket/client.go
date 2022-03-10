@@ -2,7 +2,6 @@ package websocket
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"time"
 
@@ -108,8 +107,8 @@ func NewBall() Ball {
 		Speed:     5,
 		Height:    30,
 		Width:     30,
-		X:         (board.Width - 30) / 2,
-		Y:         (board.Height + 30) / 2,
+		X:         (board.Width - 60) / 2,
+		Y:         (board.Height - 60) / 2,
 	}
 }
 
@@ -144,7 +143,6 @@ func (c *Connection) MsgHandler(msg []byte, pool *Pool, s Subscription) {
 	if umsg.Message == "connected" {
 		player := Player{}
 		initPaddlePosition := (board.Height / 2) - (paddle.Height / 2)
-		fmt.Println(umsg.User)
 		if len(pool.Rooms[s.Room]) < 2 {
 			p1 := updatePlayer(player, paddle.Width, paddle.Height, paddleOffsetX, initPaddlePosition, 0, umsg.User)
 			p2 := updatePlayer(player, paddle.Width, paddle.Height, paddleOffsetX, initPaddlePosition, 0, "")
@@ -159,7 +157,6 @@ func (c *Connection) MsgHandler(msg []byte, pool *Pool, s Subscription) {
 		pool.State.Ball = NewBall()
 	}
 	if umsg.Message == "move-paddle-up" {
-		fmt.Println("moving paddle up")
 		player, ps := getPlayer(pool, umsg.User)
 
 		if player.Y > 14 {
@@ -170,11 +167,8 @@ func (c *Connection) MsgHandler(msg []byte, pool *Pool, s Subscription) {
 				pool.State.PlayerTwo = np
 			}
 		}
-
-		fmt.Println(player)
 	}
 	if umsg.Message == "move-paddle-down" {
-		fmt.Println("moving paddle down")
 		player, ps := getPlayer(pool, umsg.User)
 
 		if player.Y < board.Height-player.PaddleHeight-14 {
@@ -186,10 +180,8 @@ func (c *Connection) MsgHandler(msg []byte, pool *Pool, s Subscription) {
 			}
 		}
 
-		fmt.Println(player)
 	}
 	if umsg.Message == "start-game" {
-		fmt.Println("starting-game")
 		if !pool.State.Playing {
 			pool.State.Playing = true
 			go moveBall(pool, s)
@@ -269,11 +261,11 @@ func moveBall(pool *Pool, s Subscription) {
 			pool.State.Ball = nb
 
 			// handle bounce of top and bottom
-			if b.Y-b.Radius > board.Height-b.Height {
-				nb := updateBall(b, b.Width, b.Height, b.X, board.Height-b.Radius, b.Radius, b.VelocityX, -b.VelocityY, b.Speed)
+			if b.Y == 0 {
+				nb := updateBall(b, b.Width, b.Height, b.X, b.Height, b.Radius, b.VelocityX, -b.VelocityY, b.Speed)
 				pool.State.Ball = nb
-			} else if b.Y-b.Radius < b.Height {
-				nb := updateBall(b, b.Width, b.Height, b.X, 7*b.Radius, b.Radius, b.VelocityX, -b.VelocityY, b.Speed)
+			} else if b.Y == board.Height-b.Height-5 {
+				nb := updateBall(b, b.Width, b.Height, b.X, board.Height-2*b.Height, b.Radius, b.VelocityX, -b.VelocityY, b.Speed)
 				pool.State.Ball = nb
 			}
 
@@ -306,14 +298,13 @@ func moveBall(pool *Pool, s Subscription) {
 
 			// bounce off paddles
 			if b.X == p1.PaddleWidth+p1.X &&
-				b.Y > p1.Y-p1.PaddleHeight &&
+				b.Y > p1.Y &&
 				b.Y < p1.Y+p1.PaddleHeight {
 				nb := updateBall(b, b.Width, b.Height, b.Height+b.Radius+p1.PaddleHeight/2, b.Y, b.Radius, -b.VelocityX, b.VelocityY, b.Speed)
 				pool.State.Ball = nb
 			} else if b.X == board.Width-(p2.X+p2.PaddleWidth+b.Width) &&
-				b.Y > p1.Y-p1.PaddleHeight &&
-				b.Y < p1.Y+p1.PaddleHeight {
-				fmt.Println(board.Width - (p2.X + p2.PaddleWidth))
+				b.Y > p2.Y &&
+				b.Y < p2.Y+p2.PaddleHeight {
 				nb := updateBall(b, b.Width, b.Height, board.Width-2*p1.PaddleWidth, b.Y, b.Radius, -b.VelocityX, b.VelocityY, b.Speed)
 				pool.State.Ball = nb
 			}
