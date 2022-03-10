@@ -19,10 +19,6 @@ const Game = () => {
 
   const userId = useMemo(() => generateRandomUserId(), []);
 
-  const windowWidth = useMemo(() => window.innerWidth, []);
-
-  const windowHeight = useMemo(() => window.innerHeight, []);
-
   const { gameCode, setGameCode } = useContext(Context);
   const [c, setC] = useState<null | WebSocket>(null);
   const [wins, setWins] = useState<number>(0);
@@ -35,12 +31,12 @@ const Game = () => {
   const [ballRadius, setBallRadius] = useState<number>(0);
   const [ballWidth, setBallWidth] = useState<number>(0);
   const [ballHeight, setBallHeight] = useState<number>(0);
-  const [ballX, setBallX] = useState<number>(windowWidth / 2);
-  const [ballY, setBallY] = useState<number>(windowHeight / 2);
+  const [ballX, setBallX] = useState<number>(0);
+  const [ballY, setBallY] = useState<number>(0);
   const [boardWidth, setBoardWidth] = useState<number>(0);
   const [boardHeight, setBoardHeight] = useState<number>(0);
-  const [paddleWidth, setPaddleWidth] = useState<number>(windowWidth);
-  const [paddleHeight, setPaddleHeight] = useState<number>(windowWidth);
+  const [paddleWidth, setPaddleWidth] = useState<number>(0);
+  const [paddleHeight, setPaddleHeight] = useState<number>(0);
   const [isOpponentConnected, setIsOpponentConnected] = useState<boolean>(false);
 
   const updateGameState = (data: GameState) => {
@@ -121,50 +117,48 @@ const Game = () => {
   }, [onKeyPress]);
   return (
     <Page>
-      {(loading && !error) && (
-        <Container fullHeight fullWidth alignItems="center" justifyContent="center" inline>
-          <Container block justifyContent="center">
-            <Text text="Sit tight while we get your game started :)" variant="secondary" />
-            <Container inline justifyContent="center" fullWidth marginTop="20px">
-              <Loader width={60} height={60} center={false} />
-            </Container>
-          </Container>
-        </Container>
-      )}
-
-      {(!loading && !error) && (
-        <Container inline fullHeight fullWidth justifyContent="center" alignItems="center">
-          <Container textAlign="center">
-            <Container textAlign="center" fullWidth marginBottom="20px">
-              <Text text={`Game code: ${gameCode}`} variant="secondary" />
-              {!isOpponentConnected
-                ? <Text text="Waiting for opponent ..." variant="secondary" />
-                : (
-                  <>
-                    <ScoreBoard wins={wins} loses={loses} />
-                    <Text text="Press the space button to begin" variant="secondary" />
-                  </>
-                )}
-            </Container>
-            <Container width={`${boardWidth}px`} inline height={`${boardHeight}px`} justifyContent="space-between" position="relative" border="2px solid white">
-              <Paddle type="left-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={paddleOffsetY} />
-              <Paddle type="right-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={oppPaddleOffsetY} />
-            </Container>
-            <Ball x={ballX} y={ballY} width={ballWidth} height={ballHeight} radius={ballRadius} />
-          </Container>
-        </Container>
-      )}
-
-      {(error) && (
-        <Container inline fullHeight fullWidth justifyContent="center" alignItems="center">
+      <Container inline fullHeight fullWidth justifyContent="center" alignItems="center">
+        {(loading && !error) && (
           <Container>
-            <Text text="We're having some difficulties connecting to the game server" variant="secondary" />
-            <Container fullWidth justifyContent="center" inline marginTop="20px">
-              <Button text="Try again" variant="auxilary" onClick={() => window.location.reload()} />
+            <Container block justifyContent="center">
+              <Text text="Sit tight while we get your game started :)" variant="secondary" />
+              <Container inline justifyContent="center" fullWidth marginTop="20px">
+                <Loader width={60} height={60} center={false} />
+              </Container>
             </Container>
           </Container>
+        )}
+
+        {(!loading && !error) && (
+        <Container textAlign="center">
+          <Container textAlign="center" fullWidth marginBottom="20px">
+            <Text text={`Game code: ${gameCode}`} variant="secondary" />
+            {!isOpponentConnected
+              ? <Text text="Waiting for opponent ..." variant="secondary" />
+              : (
+                <>
+                  <ScoreBoard wins={wins} loses={loses} />
+                  <Text text="Press the space button to begin" variant="secondary" />
+                </>
+              )}
+          </Container>
+          <Container width={`${boardWidth}px`} inline height={`${boardHeight}px`} justifyContent="space-between" position="relative" border="2px solid white">
+            <Paddle type="left-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={paddleOffsetY} />
+            <Paddle type="right-paddle" boardWidth={boardWidth} width={paddleWidth} height={paddleHeight} offsetX={paddleOffsetX} offsetY={oppPaddleOffsetY} />
+          </Container>
+          <Ball x={ballX} y={ballY} width={ballWidth} height={ballHeight} radius={ballRadius} />
         </Container>
-      )}
+        )}
+
+        {(error) && (
+        <Container>
+          <Text text="We're having some difficulties connecting to the game server" variant="secondary" />
+          <Container fullWidth justifyContent="center" inline marginTop="20px">
+            <Button text="Try again" variant="auxilary" onClick={() => window.location.reload()} />
+          </Container>
+        </Container>
+        )}
+      </Container>
     </Page>
   );
 };
