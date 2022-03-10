@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Deploy client app to heroku.
+      - name: Deploy server to heroku.
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           process_type: web
