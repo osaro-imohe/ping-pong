@@ -16,7 +16,7 @@ const Init = ({ nextStage } : HomeSubcomponentProps) => (
     <Container marginTop="20px">
       <Container marginRight="5px" inline>
         <LinkTo path="/game">
-          <Button text="Create game" variant="auxilary" onClick={() => nextStage('start')} />
+          <Button text="Create game" variant="auxilary" />
         </LinkTo>
       </Container>
       <Container marginRight="5px" inline>
