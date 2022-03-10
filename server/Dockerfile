@@ -1,11 +1,7 @@
-FROM golang:1.10
+FROM golang:1.11
 
 WORKDIR /
-
 COPY . .
-
-RUN go mod init
-
-RUN go build  -o /server
+RUN go mod download
 
 CMD ["go","run","main.go"]
