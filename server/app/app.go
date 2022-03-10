@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Ghvstcode/assesment/app/handler"
-	"github.com/Ghvstcode/assesment/app/model"
-	"github.com/Ghvstcode/assesment/app/websocket"
-	"github.com/Ghvstcode/assesment/config"
 	"github.com/gorilla/mux"
+	"github.com/osaro-imohe/ping-pong/server/app/handler"
+	"github.com/osaro-imohe/ping-pong/server/app/model"
+	"github.com/osaro-imohe/ping-pong/server/app/websocket"
+	"github.com/osaro-imohe/ping-pong/server/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

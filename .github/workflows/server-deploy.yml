@@ -1,0 +1,26 @@
+name: Deploy Server to Heroku.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy client app to heroku.
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          process_type: web
+          dockerfile_name: Dockerfile
+          dockerfile_directory: ./server/
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_SERVER_APP_NAME }}

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Ghvstcode/assesment/app"
-	"github.com/Ghvstcode/assesment/config"
+	"github.com/osaro-imohe/ping-pong/server/app"
+	"github.com/osaro-imohe/ping-pong/server/config"
 )
 
 func main() {

@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Ghvstcode/assesment/app/websocket"
 	"github.com/gorilla/mux"
+	"github.com/osaro-imohe/ping-pong/server/app/websocket"
 )
 
 func ServeWS(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {

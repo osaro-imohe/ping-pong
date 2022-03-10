@@ -1,4 +1,4 @@
-name: Deploy Client app to Heroku.
+name: Deploy Client to Heroku.
 
 on:
   push:
@@ -23,4 +23,4 @@ jobs:
           dockerfile_directory: ./client/
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_DEV_APP_NAME }}
+          heroku_app_name: ${{ secrets.HEROKU_CLIENT_APP_NAME }}

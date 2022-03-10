@@ -1,12 +1,11 @@
-module github.com/Ghvstcode/assesment
+module github.com/osaro-imohe/ping-pong/server
 
-go 1.17
+go 1.16
 
 require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
-	gorm.io/driver/postgres v1.2.3
-	gorm.io/gorm v1.22.4
+	github.com/gorilla/websocket v1.5.0
+	gorm.io/driver/postgres v1.3.1
+	gorm.io/gorm v1.23.2
 )
-
-require github.com/gorilla/websocket v1.5.0

@@ -68,7 +68,7 @@ const Game = () => {
       setLoading(true);
       // 5 second delay for dramatic flare XD
       await delay(5);
-      const conn = new WebSocket(`ws://127.0.0.1:8080/new-game/${gameCode}`);
+      const conn = new WebSocket(`ws://ping-pong-app-server/new-game/${gameCode}`);
       conn.onopen = () => {
         setC(conn);
         setLoading(false);
