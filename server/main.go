@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/osaro-imohe/ping-pong/server/app"
 	"github.com/osaro-imohe/ping-pong/server/config"
 )
@@ -10,5 +12,5 @@ func main() {
 
 	app := &app.App{}
 	app.Initialize(config)
-	app.Run(":8080")
+	app.Run(":" + os.Getenv("PORT"))
 }
