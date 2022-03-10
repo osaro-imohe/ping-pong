@@ -4,6 +4,8 @@ WORKDIR /
 
 COPY . .
 
+COPY go.mod go.sum ./
+
 RUN go mod download
 
 CMD ["go","run","main.go"]
