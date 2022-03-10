@@ -1,4 +1,4 @@
-name: Deploy to heroku -- develop.
+name: Deploy Client app to Heroku.
 
 on:
   push:
