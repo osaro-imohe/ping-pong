@@ -7,7 +7,7 @@ import Paddle from '../../components/paddle';
 import Page from '../../components/page';
 import Text from '../../components/text';
 import { delay } from '../../helpers';
-import Loader from '../../loader';
+import Loader from '../../components/loader';
 import Ball from '../../components/ball';
 import { generateGameCode, generateRandomUserId, msg } from '../../utils';
 import { GameState } from '../../types/components';

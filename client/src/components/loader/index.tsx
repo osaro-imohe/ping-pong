@@ -1,5 +1,5 @@
-import { LoaderProps } from '../types/components';
-import styles from '../styles.module.css';
+import { LoaderProps } from '../../types/components';
+import styles from '../../styles.module.css';
 
 const Loader = ({ width, height, center } : LoaderProps) => (
   <div
