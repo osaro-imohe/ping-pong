@@ -11,7 +11,7 @@ A multiplayer ping pong game
 ## Running the Client locally
 
 - Go to client folder `cd client`
-- In `client/src/pages/game/index.tsx` file on line 65, change `wss://ping-pong-app-server.herokuapp.com/new-game/${gameCode}` to `wss://localhost:8080/new-game/${gameCode}`
+- In `client/src/pages/game/index.tsx` file on line 65, change `wss://ping-pong-app-server.herokuapp.com/new-game/${gameCode}` to `ws://localhost:8080/new-game/${gameCode}`
 - Run `yarn start`
 
 ## Running the Server locally
