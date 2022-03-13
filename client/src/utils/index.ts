@@ -2,7 +2,7 @@ import { selectRandomElementInArray } from '../helpers';
 
 const URLS = new Map([['development', 'ws://localhost:8080'], ['production', 'wss://ping-pong-app-server.herokuapp.com']]);
 
-export const BASE_URL = URLS.get(process.env.NODE_ENV);
+export const BASE_URL = URLS.get(process.env.REACT_APP_ENVIRONMENT ?? 'development');
 
 export const verbs = [
   'accept', 'add', 'admire', 'admit', 'advise', 'afford', 'agree', 'alert', 'allow', 'back', 'bake', 'balance', 'ban', 'bang', 'bare', 'bat', 'bathe', 'battle', 'beam', 'branch', 'breathe', 'bruise', 'brush', 'bubble', 'bump', 'burn', 'bury', 'buzz', 'compare', 'compete', 'complain', 'complete', 'concentrate', 'concern', 'confess', 'confuse', 'connect', 'consider', 'consist', 'contain', 'continue', 'copy', 'correct', 'deliver', 'depend', 'describe', 'desert', 'deserve', 'destroy', 'detect', 'develop', 'disagree', 'disappear', 'increase', 'influence', 'inform', 'inject', 'injure', 'instruct', 'matter', 'measure', 'meddle', 'melt', 'memorise', 'mend', 'messup', 'waste', 'watch', 'water', 'wave', 'weigh', 'welcome', 'whine', 'whip',
