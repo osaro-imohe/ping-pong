@@ -3,6 +3,7 @@ package app
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/osaro-imohe/ping-pong/server/app/handler"
@@ -23,6 +24,14 @@ func (a *App) Initialize() {
 	a.Pool = websocket.NewPool()
 	go a.Pool.Start()
 	a.setRouters()
+}
+
+func (a *App) GetEnv(key, fallback string) string {
+	value := os.Getenv(key)
+	if len(value) == 0 {
+		return fallback
+	}
+	return value
 }
 
 // setRouters sets the all required routers

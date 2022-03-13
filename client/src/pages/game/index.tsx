@@ -9,7 +9,9 @@ import Text from '../../components/text';
 import { delay } from '../../helpers';
 import Loader from '../../components/loader';
 import Ball from '../../components/ball';
-import { generateGameCode, generateRandomUserId, msg } from '../../utils';
+import {
+  BASE_URL, generateGameCode, generateRandomUserId, msg,
+} from '../../utils';
 import { GameState } from '../../types/components';
 import ScoreBoard from '../../components/scoreboard';
 import { Context } from '../../context';
@@ -62,7 +64,7 @@ const Game = () => {
       setLoading(true);
       // 5 second delay for dramatic flare XD
       await delay(5);
-      const conn = new WebSocket(`wss://ping-pong-app-server.herokuapp.com/new-game/${gameCode}`);
+      const conn = new WebSocket(`${BASE_URL}/new-game/${gameCode}`);
       conn.onopen = () => {
         setC(conn);
         setLoading(false);

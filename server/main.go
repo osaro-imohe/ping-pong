@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/osaro-imohe/ping-pong/server/app"
@@ -9,5 +10,6 @@ import (
 func main() {
 	app := &app.App{}
 	app.Initialize()
-	app.Run(":" + os.Getenv("PORT"))
+	fmt.Println(os.Getenv("PORT"))
+	app.Run(":" + app.GetEnv("PORT", "8080"))
 }
