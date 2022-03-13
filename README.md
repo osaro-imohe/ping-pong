@@ -11,13 +11,11 @@ A multiplayer ping pong game
 ## Running the Client locally
 
 - Go to client folder `cd client`
-- In `src/pages/game/index.tsx` file on line 65, change `wss://ping-pong-app-server.herokuapp.com/new-game/${gameCode}` to `ws://localhost:8080/new-game/${gameCode}`
-- Run `yarn start`
+- Run `yarn dev`
 
 ## Running the Server locally
 
 - Go to server folder `cd server`
-- In the main.go file on line 12: change `app.Run(":" + os.Getenv("PORT"))` to `app.Run(":8080")`
 - Run `go run main.go`
 
 This application is live at: http://ping-pong-app-client.herokuapp.com/
