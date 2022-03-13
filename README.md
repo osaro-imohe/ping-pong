@@ -11,6 +11,7 @@ A multiplayer ping pong game
 ## Running the Client locally
 
 - Go to client folder `cd client`
+- Run `yarn install`
 - Run `yarn dev`
 
 ## Running the Server locally
