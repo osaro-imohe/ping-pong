@@ -19,8 +19,6 @@ A multiplayer ping pong game
 - Go to server folder `cd server`
 - Run `go run main.go`
 
-This application is live at: http://ping-pong-app-client.herokuapp.com/
-
 Game Instructions:
 1) Click the create a game button
 2) Once the game has been created you'll notice a Game code at the top of the game. This code can be shared with others to join your ping pong session.
